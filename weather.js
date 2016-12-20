@@ -22,6 +22,15 @@ function getPhysAddyAPIPromise(loc) {
   return Promise.resolve(jqueryAPromise);
 }
 
+function upcaseStringFirstLetters(string) {
+  var split = string.split(" ");
+  for(var i = 0; i < split.length; i++) {
+    var word = split[i]
+    split[i] = word[0].toUpperCase() + word.slice(1, word.length).toLowerCase();
+  }
+  return split.join(" ");
+}
+
 function convertCondResToIconType(cond) {
   // Function returns the icon code for the Weather Icons library detailed here:
   // https://erikflowers.github.io/weather-icons/
@@ -75,6 +84,7 @@ $(document).ready(function() {
       return this.apiKey;
     }
   }
+
   function addActionToForm() {
     $('.key-form').submit(function(e) {
       e.preventDefault();
@@ -100,7 +110,7 @@ $(document).ready(function() {
 
   function updateWeatherDisplay(weather) {
     $(".weather-display").html('<h5 class="weather-info temp text-center">' + weather.tempC + ' C</h5>' +
-      '<h5 class="weather-info conditions text-center">' + weather.conditions + '</h5>' +
+      '<h5 class="weather-info conditions text-center">' + upcaseStringFirstLetters(weather.conditions) + '</h5>' +
       '<h5 class="weather-info condition-icon text-center">' + displayConditionIcon(weather.conditions) + '</h5>');
   }
 
