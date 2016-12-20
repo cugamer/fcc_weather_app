@@ -61,6 +61,14 @@ function convertCondResToIconType(cond) {
   }
 }
 
+function celsiusToFarenheit(temp) {
+  return Math.floor(temp * 1.8 + 32);
+}
+
+function farenheitToCelsius(temp) {
+  return Math.floor((temp - 32) / 1.8);
+}
+
 $(document).ready(function() {
   function displayWeatherArea() {
     createWeatherFormPromise().then(function(res) {
@@ -78,6 +86,7 @@ $(document).ready(function() {
           '</form>');
     return Promise.resolve(jQueryPromise);
   }
+
   var apiKey = new function() {
     this.apiKey = null;
     this.getAPIKey = function() {
@@ -108,10 +117,41 @@ $(document).ready(function() {
     });
   }
 
+  function addCFToggleToTemp() {
+    $('.temp-toggle').on('click', function() {
+      if($('.temp-toggle').hasClass('temp-f')) {
+        $('.temp-toggle').html(" C");
+        $('.temp-toggle').removeClass("temp-f");
+        $('.temp-toggle').addClass("temp-c");
+        $('.current-temp').html(currentWeather.tempC);
+      } else if($('.temp-toggle').hasClass('temp-c')) {
+        $('.temp-toggle').html(" F");
+        $('.temp-toggle').removeClass("temp-c");
+        $('.temp-toggle').addClass("temp-f");
+        $('.current-temp').html(celsiusToFarenheit(currentWeather.tempC));
+      }
+    });
+  }
+
+  function weatherDisplayPromise(weather) {
+            var jQueryPromise = $(".weather-display").html('<h5 class="weather-info temp text-center">' +
+              '<span class="current-temp">' + 
+              celsiusToFarenheit(weather.tempC) + 
+              '</span>' +
+              ' <a class="temp-toggle temp-f">F</a></h5>' +
+              '<h5 class="weather-info conditions text-center">' + 
+              upcaseStringFirstLetters(weather.conditions) + 
+              '</h5>' +
+              '<h5 class="weather-info condition-icon text-center">' + 
+              displayConditionIcon(weather.conditions) + 
+              '</h5>');
+    return Promise.resolve(jQueryPromise).then(function() {
+      addCFToggleToTemp();
+    });
+  }
+
   function updateWeatherDisplay(weather) {
-    $(".weather-display").html('<h5 class="weather-info temp text-center">' + weather.tempC + ' C</h5>' +
-      '<h5 class="weather-info conditions text-center">' + upcaseStringFirstLetters(weather.conditions) + '</h5>' +
-      '<h5 class="weather-info condition-icon text-center">' + displayConditionIcon(weather.conditions) + '</h5>');
+    weatherDisplayPromise(weather);
   }
 
   function removeAPIKeyForm() {

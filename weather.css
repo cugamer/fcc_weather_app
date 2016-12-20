@@ -23,3 +23,12 @@ h1 {
 .weather-icon {
 	font-size: 2.5em;
 }
+
+.temp-toggle {
+	cursor: default;
+	color: #000000;
+}
+
+.temp-toggle:hover {
+	text-decoration: none;
+}
