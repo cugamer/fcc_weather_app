@@ -65,22 +65,8 @@ $(document).ready(function() {
     if(!apiKey.apiKey) {
       apiKey.apiKey = $(".key-text").val();
     }
-
     updateWeather(geoLoc, apiKey.apiKey);
   });
-
-  function updateLocation(loc) {
-    getPhysAddyAPIPromise(loc).then(function(res) {
-      var locData = {
-        city: res.results[0].address_components[2].long_name,
-        state: res.results[0].address_components[5].short_name
-      }
-      console.log(locData);
-      updateLocationDisplay(locData);
-    }, function(rej) {
-      console.log(rej);
-    });
-  }
   
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
@@ -98,9 +84,22 @@ $(document).ready(function() {
     $(".weather-display").html('<h5 class="weather-info temp text-center">' + weather.tempC + ' C</h5>' +
       '<h5 class="weather-info conditions text-center">' + weather.conditions + '</h5>' +
       '<h5 class="weather-info condition-icon text-center">' + displayConditionIcon(weather.conditions) + '</h5>');
-    // $(".temp").html(weather.tempC + " C");
-    // $(".conditions").html(weather.conditions);
-    // displayConditionIcon(weather.conditions);
+  }
+
+  function updateLocation(loc) {
+    getPhysAddyAPIPromise(loc).then(function(res) {
+      var locData = {
+        city: res.results[0].address_components[2].long_name,
+        state: res.results[0].address_components[5].short_name
+      }
+      var city = locData.city;
+      var state = locData.state;
+      var locationString = city + ", " + state
+      updateLocationDisplay(locationString);
+    }, function(rej) {
+      console.log(rej);
+      updateLocationDisplay("We're sorry, the location finding system is unavailable.  Please try again later.");
+    });
   }
 
   function geolocSuccess(pos) {
@@ -112,16 +111,15 @@ $(document).ready(function() {
     updateLocation(geoLoc);
   };
 
-  function updateLocationDisplay(loc) {
-    var city = loc.city;
-    var state = loc.state;
-    $(".location-text").html(city + ", " + state);
+  function updateLocationDisplay(locDisplay) {
+    $(".location-text").html(locDisplay);
   }
   
   function geolocFail(err) {
     console.log(err);
+    updateLocationDisplay("We're sorry, your location could not be found.  Please allow your browser to share your location on your next visit.")
   };
-  
+
   var options = {
     timeout: 10000,
     maximumAge: 0
