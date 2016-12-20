@@ -1,0 +1,25 @@
+body {
+	background-color: #000000;
+}
+
+h1 {
+	font-size: 48px;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.main-box {
+	height: 100%;
+	background-color: #C0C0C0;
+}
+
+.weather-info {
+	font-size: 2.2em;
+	padding: 10px 0;
+	margin: 0;
+}
+
+.weather-icon {
+	font-size: 2.5em;
+}

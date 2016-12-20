@@ -163,6 +163,6 @@ $(document).ready(function() {
   }
 
   function displayConditionIcon(cond) {
-    return '<i class="wi ' + convertCondResToIconType(cond) + '">'
+    return '<i class="weather-icon wi ' + convertCondResToIconType(cond) + '">'
   }
 });
