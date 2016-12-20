@@ -53,21 +53,37 @@ function convertCondResToIconType(cond) {
 }
 
 $(document).ready(function() {
+  function displayWeatherArea() {
+    createWeatherFormPromise().then(function(res) {
+      addActionToForm()
+    });
+  }
+
+  function createWeatherFormPromise() {
+    var jQueryPromise = $('.weather-display-area').html('<div class="weather-display text-center">' +
+            '<p>Please enter your Open Weather Map api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="http://openweathermap.org/api" target="blank">Open Weather Map site</a>.</p>.' +
+          '</div>' +
+          '<form class="key-form text-center">' +
+            '<input type="text" class="key-text">' +
+            '<input type="submit" class="key-submit" value="Add API Key">' +
+          '</form>');
+    return Promise.resolve(jQueryPromise);
+  }
   var apiKey = new function() {
     this.apiKey = null;
     this.getAPIKey = function() {
       return this.apiKey;
     }
   }
-  
-  $('.key-form').submit(function(e) {
-    e.preventDefault();
-    if(!apiKey.apiKey) {
-      apiKey.apiKey = $(".key-text").val();
-    }
-    updateWeather(geoLoc, apiKey.apiKey);
-  });
-  
+  function addActionToForm() {
+    $('.key-form').submit(function(e) {
+      e.preventDefault();
+      if(!apiKey.apiKey) {
+        apiKey.apiKey = $(".key-text").val();
+      }
+      updateWeather(geoLoc, apiKey.apiKey);
+    });
+  }
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
       currentWeather = {
@@ -109,6 +125,7 @@ $(document).ready(function() {
     geoLoc.accuracy = crd.accuracy;
     geoLoc.timeStamp = pos.timestamp
     updateLocation(geoLoc);
+    displayWeatherArea();
   };
 
   function updateLocationDisplay(locDisplay) {
