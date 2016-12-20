@@ -22,6 +22,36 @@ function getPhysAddyAPIPromise(loc) {
   return Promise.resolve(jqueryAPromise);
 }
 
+function convertCondResToIconType(cond) {
+  // Function returns the icon code for the Weather Icons library detailed here:
+  // https://erikflowers.github.io/weather-icons/
+  switch(cond) {
+    case "clear sky":
+      return "f00d";
+      break;
+    case "few clouds":
+    case "scattered clouds":
+    case "broken clouds":
+      return "f002";
+      break;
+    case "shower rain":
+      return "f009";
+      break;
+    case "rain":
+      return "f008";
+      break;
+    case "thunderstorm":
+      return "f010";
+      break;
+    case "snow":
+      return "f00a";
+      break;
+    case "mist":
+      return "f003";
+      break;
+  }
+}
+
 $(document).ready(function() {
   var apiKey = new function() {
     this.apiKey = null;
