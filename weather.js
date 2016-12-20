@@ -84,6 +84,7 @@ $(document).ready(function() {
       updateWeather(geoLoc, apiKey.apiKey);
     });
   }
+
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
       currentWeather = {
@@ -91,6 +92,7 @@ $(document).ready(function() {
         conditions: res.weather[0].description
       }
       updateWeatherDisplay(currentWeather);
+      removeAPIKeyForm();
     }, function(rej) {
       console.log(rej);
     });
@@ -100,6 +102,10 @@ $(document).ready(function() {
     $(".weather-display").html('<h5 class="weather-info temp text-center">' + weather.tempC + ' C</h5>' +
       '<h5 class="weather-info conditions text-center">' + weather.conditions + '</h5>' +
       '<h5 class="weather-info condition-icon text-center">' + displayConditionIcon(weather.conditions) + '</h5>');
+  }
+
+  function removeAPIKeyForm() {
+    $(".key-form").remove();
   }
 
   function updateLocation(loc) {
