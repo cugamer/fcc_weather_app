@@ -95,9 +95,12 @@ $(document).ready(function() {
   }
 
   function updateWeatherDisplay(weather) {
-    $(".temp").html(weather.tempC + " C");
-    $(".conditions").html(weather.conditions);
-    displayConditionIcon(weather.conditions);
+    $(".weather-display").html('<h5 class="weather-info temp text-center">' + weather.tempC + ' C</h5>' +
+      '<h5 class="weather-info conditions text-center">' + weather.conditions + '</h5>' +
+      '<h5 class="weather-info condition-icon text-center">' + displayConditionIcon(weather.conditions) + '</h5>');
+    // $(".temp").html(weather.tempC + " C");
+    // $(".conditions").html(weather.conditions);
+    // displayConditionIcon(weather.conditions);
   }
 
   function geolocSuccess(pos) {
@@ -129,6 +132,6 @@ $(document).ready(function() {
   }
 
   function displayConditionIcon(cond) {
-    $(".condition-icon").html('<i class="wi ' + convertCondResToIconType(cond) + '">')
+    return '<i class="wi ' + convertCondResToIconType(cond) + '">'
   }
 });
