@@ -27,27 +27,27 @@ function convertCondResToIconType(cond) {
   // https://erikflowers.github.io/weather-icons/
   switch(cond) {
     case "clear sky":
-      return "f00d";
+      return "wi-day-sunny";
       break;
     case "few clouds":
     case "scattered clouds":
     case "broken clouds":
-      return "f002";
+      return "wi-day-cloudy";
       break;
     case "shower rain":
-      return "f009";
+      return "wi-day-showers";
       break;
     case "rain":
-      return "f008";
+      return "wi-day-rain";
       break;
     case "thunderstorm":
-      return "f010";
+      return "wi-day-thunderstorm";
       break;
     case "snow":
-      return "f00a";
+      return "wi-day-snow";
       break;
     case "mist":
-      return "f003";
+      return "wi-day-fog";
       break;
   }
 }
@@ -97,6 +97,7 @@ $(document).ready(function() {
   function updateWeatherDisplay(weather) {
     $(".temp").html(weather.tempC + " C");
     $(".conditions").html(weather.conditions);
+    displayConditionIcon(weather.conditions);
   }
 
   function geolocSuccess(pos) {
@@ -125,5 +126,9 @@ $(document).ready(function() {
 
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geolocSuccess, geolocFail, options);
+  }
+
+  function displayConditionIcon(cond) {
+    $(".condition-icon").html('<i class="wi ' + convertCondResToIconType(cond) + '">')
   }
 });
