@@ -69,10 +69,15 @@ function farenheitToCelsius(temp) {
   return Math.floor((temp - 32) / 1.8);
 }
 
+function createFormattedDateTime() {
+  var date = new Date();
+  return $.format.date(new Date(), 'ddd, MMMM D') + " at " + $.format.date(new Date(), 'hh:mm p');
+}
+
 $(document).ready(function() {
   function displayWeatherArea() {
     createWeatherFormPromise().then(function(res) {
-      addActionToAPIKeyForm()
+      addActionToAPIKeyForm();
     });
   }
 
@@ -83,7 +88,8 @@ $(document).ready(function() {
           '<form class="key-form text-center">' +
             '<input type="text" class="key-text">' +
             '<input type="submit" class="key-submit" value="Add API Key">' +
-          '</form>');
+          '</form>' + 
+          '<div class="last-updated"></div>');
     return Promise.resolve(jQueryPromise);
   }
 
@@ -104,6 +110,13 @@ $(document).ready(function() {
     });
   }
 
+  function addLastUpdatedAt() {
+    $('.last-updated').html('<p class="text-center">' +
+      'Last Updated At ' +
+      createFormattedDateTime() +
+      '</p>');
+  }
+
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
       currentWeather = {
@@ -113,6 +126,7 @@ $(document).ready(function() {
       updateWeatherDisplay(currentWeather);
       emptyAPIKeyForm();
       addRefreshWeatherButton();
+      addLastUpdatedAt();
     }, function(rej) {
       console.log(rej);
     });
@@ -162,7 +176,6 @@ $(document).ready(function() {
   function addActionToRefreshButton() {
     $('.refresh-weather').on('click', function() {
       var d = new Date();
-      console.log(d);
       updateWeather(geoLoc, apiKey.apiKey);
     })
   }
