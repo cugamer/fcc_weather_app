@@ -10,7 +10,8 @@ h1 {
 }
 
 .main-box {
-	height: 100%;
+	/*height: 100%;*/
+	min-height: 100%;
 	background-color: #C0C0C0;
 }
 
@@ -31,4 +32,24 @@ h1 {
 
 .temp-toggle:hover {
 	text-decoration: none;
+}
+
+.api-desc-text {
+	font-size: 1.5em;
+}
+
+.key-submit,
+.key-form {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.key-text {
+	width: 270px;
+}
+
+.weather-display-area {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
 }

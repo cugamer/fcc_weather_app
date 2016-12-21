@@ -86,11 +86,12 @@ $(document).ready(function() {
 
   function createWeatherFormPromise() {
     var jQueryPromise = $('.weather-display-area').html('<div class="weather-display text-center">' +
-            '<p>Please enter your Open Weather Map api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="http://openweathermap.org/api" target="blank">Open Weather Map site</a>.</p>.' +
+            '<p class="api-desc-text">Please enter your Open Weather Map api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="http://openweathermap.org/api" target="blank">Open Weather Map site</a>.</p>.' +
           '</div>' +
           '<form class="key-form text-center">' +
             '<input type="text" class="key-text">' +
-            '<input type="submit" class="key-submit" value="Add API Key">' +
+            '<br />' +
+            '<input type="submit" class="key-submit btn-primary" value="Add API Key">' +
           '</form>' + 
           '<div class="last-updated"></div>');
     return Promise.resolve(jQueryPromise);
@@ -184,7 +185,7 @@ $(document).ready(function() {
   }
 
   function addRefreshWeatherButton() {
-    var jQueryPromise = $(".key-form").html('<button class="refresh-weather"> Refresh Weather</button>');
+    var jQueryPromise = $(".key-form").html('<button class="btn-primary refresh-weather"> Refresh Weather</button>');
     Promise.resolve(jQueryPromise).then(function() {
       addActionToRefreshButton();
     })
