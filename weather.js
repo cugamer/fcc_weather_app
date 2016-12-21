@@ -56,8 +56,11 @@ function convertCondResToIconType(cond) {
       return "wi-day-snow";
       break;
     case "mist":
+    case "haze":
       return "wi-day-fog";
       break;
+    default:
+      return "Condition not found";
   }
 }
 
