@@ -72,7 +72,7 @@ function farenheitToCelsius(temp) {
 $(document).ready(function() {
   function displayWeatherArea() {
     createWeatherFormPromise().then(function(res) {
-      addActionToForm()
+      addActionToAPIKeyForm()
     });
   }
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
     }
   }
 
-  function addActionToForm() {
+  function addActionToAPIKeyForm() {
     $('.key-form').submit(function(e) {
       e.preventDefault();
       if(!apiKey.apiKey) {
@@ -111,7 +111,8 @@ $(document).ready(function() {
         conditions: res.weather[0].description
       }
       updateWeatherDisplay(currentWeather);
-      removeAPIKeyForm();
+      emptyAPIKeyForm();
+      addRefreshWeatherButton();
     }, function(rej) {
       console.log(rej);
     });
@@ -134,17 +135,17 @@ $(document).ready(function() {
   }
 
   function weatherDisplayPromise(weather) {
-            var jQueryPromise = $(".weather-display").html('<h5 class="weather-info temp text-center">' +
-              '<span class="current-temp">' + 
-              celsiusToFarenheit(weather.tempC) + 
-              '</span>' +
-              ' <a class="temp-toggle temp-f">F</a></h5>' +
-              '<h5 class="weather-info conditions text-center">' + 
-              upcaseStringFirstLetters(weather.conditions) + 
-              '</h5>' +
-              '<h5 class="weather-info condition-icon text-center">' + 
-              displayConditionIcon(weather.conditions) + 
-              '</h5>');
+    var jQueryPromise = $(".weather-display").html('<h5 class="weather-info temp text-center">' +
+      '<span class="current-temp">' + 
+      celsiusToFarenheit(weather.tempC) + 
+      '</span>' +
+      ' <a class="temp-toggle temp-f">F</a></h5>' +
+      '<h5 class="weather-info conditions text-center">' + 
+      upcaseStringFirstLetters(weather.conditions) + 
+      '</h5>' +
+      '<h5 class="weather-info condition-icon text-center">' + 
+      displayConditionIcon(weather.conditions) + 
+      '</h5>');
     return Promise.resolve(jQueryPromise).then(function() {
       addCFToggleToTemp();
     });
@@ -154,8 +155,23 @@ $(document).ready(function() {
     weatherDisplayPromise(weather);
   }
 
-  function removeAPIKeyForm() {
-    $(".key-form").remove();
+  function emptyAPIKeyForm() {
+    $(".key-form").empty();
+  }
+
+  function addActionToRefreshButton() {
+    $('.refresh-weather').on('click', function() {
+      var d = new Date();
+      console.log(d);
+      updateWeather(geoLoc, apiKey.apiKey);
+    })
+  }
+
+  function addRefreshWeatherButton() {
+    var jQueryPromise = $(".key-form").html('<button class="refresh-weather"> Refresh Weather</button>');
+    Promise.resolve(jQueryPromise).then(function() {
+      addActionToRefreshButton();
+    })
   }
 
   function updateLocation(loc) {
