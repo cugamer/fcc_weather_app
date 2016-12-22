@@ -34,30 +34,33 @@ function upcaseStringFirstLetters(string) {
 function convertCondResToIconType(cond) {
   // Function returns the icon code for the Weather Icons library detailed here:
   // https://erikflowers.github.io/weather-icons/
-  switch(cond) {
-    case "clear sky":
+  switch(true) {
+    case /clear sky/.test(cond):
       return "wi-day-sunny";
       break;
-    case "few clouds":
-    case "scattered clouds":
-    case "broken clouds":
+    case /cloud/.test(cond):
       return "wi-day-cloudy";
       break;
-    case "shower rain":
+    case /drizzle/.test(cond):
       return "wi-day-showers";
       break;
-    case "rain":
+    case /rain/.test(cond):
       return "wi-day-rain";
       break;
-    case "thunderstorm":
+    case /thunderstorm/.test(cond):
       return "wi-day-thunderstorm";
       break;
-    case "snow":
+    case /snow/.test(cond):
       return "wi-day-snow";
       break;
-    case "mist":
-    case "haze":
+    case /(mist|haze|fog)/.test(cond):
       return "wi-day-fog";
+      break;
+    case /hail/.test(cond):
+      return "wi-day-hail";
+      break;
+    case /tornado/.test(cond):
+      return "wi-tornado";
       break;
     default:
       return "Condition not found";
