@@ -96,15 +96,16 @@ $(document).ready(function() {
     this.getAPIKey = function() {
       return this.apiKey;
     }
+    this.setAPIKey = function(key) {
+      this.apiKey = key;
+    }
   }
 
   function addActionToAPIKeyForm() {
     $('.key-form').submit(function(e) {
       e.preventDefault();
-      if(!apiKey.apiKey) {
-        apiKey.apiKey = $(".key-text").val();
-      }
-      updateWeather(geoLoc, apiKey.apiKey);
+      var key = $(".key-text").val();
+      updateWeather(geoLoc, key);
     });
   }
 
@@ -115,18 +116,25 @@ $(document).ready(function() {
       '</p>');
   }
 
+  function emptyAPIKeyForm() {
+    $(".key-text").val('');
+  }
+
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
+      if(!apiKey.apiKey) {
+        apiKey.apiKey = key;
+      }
       currentWeather = {
         tempC: Math.floor(res.main.temp - 273),
         conditions: res.weather[0].description
       }
       updateWeatherDisplay(currentWeather);
-      emptyAPIKeyForm();
       addRefreshWeatherButton();
       addLastUpdatedAt();
     }, function(rej) {
-      console.log(rej);
+      alert("Your API key was not recognized, please try again.");
+      emptyAPIKeyForm();
     });
   }
 
@@ -165,10 +173,6 @@ $(document).ready(function() {
         $('.current-temp').html(celsiusToFarenheit(currentWeather.tempC));
       }
     });
-  }
-
-  function emptyAPIKeyForm() {
-    $(".key-form").empty();
   }
 
   function addActionToRefreshButton() {
