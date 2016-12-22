@@ -6,15 +6,6 @@ function createWeatherAPIPromise(loc, key) {
   var jqueryWPromise = $.getJSON(queryURL);
   return Promise.resolve(jqueryWPromise);
 }
-  
-function getWeather(loc, key) {
-  createWeatherAPIPromise(loc, key).then(function(res) {
-    console.log(res)
-  }, function(rej) {
-    console.log("fail");
-  });
-  return "hello"
-}
 
 function getPhysAddyAPIPromise(loc) {
   var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + loc.lat + "," + loc.long;
@@ -210,6 +201,10 @@ $(document).ready(function() {
     });
   }
 
+  function updateLocationDisplay(locDisplay) {
+    $(".location-text").html(locDisplay);
+  }
+  
   function geolocSuccess(pos) {
     var crd = pos.coords;
     geoLoc.lat = crd.latitude;
@@ -220,10 +215,6 @@ $(document).ready(function() {
     displayWeatherArea();
   };
 
-  function updateLocationDisplay(locDisplay) {
-    $(".location-text").html(locDisplay);
-  }
-  
   function geolocFail(err) {
     console.log(err);
     updateLocationDisplay("We're sorry, your location could not be found.  Please allow your browser to share your location on your next visit.")
