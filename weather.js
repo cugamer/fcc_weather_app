@@ -229,13 +229,13 @@ $(document).ready(function() {
     updateLocationDisplay("We're sorry, your location could not be found.  Please allow your browser to share your location on your next visit.")
   };
 
-  var options = {
+  var gelocOptions = {
     timeout: 10000,
     maximumAge: 0
   };
 
   if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(geolocSuccess, geolocFail, options);
+    navigator.geolocation.getCurrentPosition(geolocSuccess, geolocFail, gelocOptions);
   }
 
   function displayConditionIcon(cond) {
