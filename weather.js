@@ -110,7 +110,7 @@ $(document).ready(function() {
 
   function addLastUpdatedAt() {
     $('.last-updated').html('<p class="text-center">' +
-      'Last Updated At ' +
+      'Last Updated: ' +
       createFormattedDateTime() +
       '</p>');
   }
@@ -182,7 +182,7 @@ $(document).ready(function() {
     var jQueryPromise = $(".key-form").html('<button class="btn-primary refresh-weather"> Refresh Weather</button>');
     Promise.resolve(jQueryPromise).then(function() {
       addActionToRefreshButton();
-    })
+    });
   }
 
   function updateLocation(loc) {
