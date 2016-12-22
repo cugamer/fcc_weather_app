@@ -130,6 +130,27 @@ $(document).ready(function() {
     });
   }
 
+  function weatherDisplayPromise(weather) {
+    var jQueryPromise = $(".weather-display").html('<h5 class="weather-info temp text-center">' +
+      '<span class="current-temp">' + 
+      celsiusToFarenheit(weather.tempC) + 
+      '</span>' +
+      ' <a class="temp-toggle temp-f">F</a></h5>' +
+      '<h5 class="weather-info conditions text-center">' + 
+      upcaseStringFirstLetters(weather.conditions) + 
+      '</h5>' +
+      '<h5 class="weather-info condition-icon text-center">' + 
+      displayConditionIcon(weather.conditions) + 
+      '</h5>');
+    return Promise.resolve(jQueryPromise);
+  }
+
+  function updateWeatherDisplay(weather) {
+    weatherDisplayPromise(weather).then(function() {
+      addCFToggleToTemp();
+    });
+  }
+
   function addCFToggleToTemp() {
     $('.temp-toggle').on('click', function() {
       if($('.temp-toggle').hasClass('temp-f')) {
@@ -144,27 +165,6 @@ $(document).ready(function() {
         $('.current-temp').html(celsiusToFarenheit(currentWeather.tempC));
       }
     });
-  }
-
-  function weatherDisplayPromise(weather) {
-    var jQueryPromise = $(".weather-display").html('<h5 class="weather-info temp text-center">' +
-      '<span class="current-temp">' + 
-      celsiusToFarenheit(weather.tempC) + 
-      '</span>' +
-      ' <a class="temp-toggle temp-f">F</a></h5>' +
-      '<h5 class="weather-info conditions text-center">' + 
-      upcaseStringFirstLetters(weather.conditions) + 
-      '</h5>' +
-      '<h5 class="weather-info condition-icon text-center">' + 
-      displayConditionIcon(weather.conditions) + 
-      '</h5>');
-    return Promise.resolve(jQueryPromise).then(function() {
-      addCFToggleToTemp();
-    });
-  }
-
-  function updateWeatherDisplay(weather) {
-    weatherDisplayPromise(weather);
   }
 
   function emptyAPIKeyForm() {
