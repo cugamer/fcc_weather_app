@@ -22,41 +22,42 @@ function upcaseStringFirstLetters(string) {
   return split.join(" ");
 }
 
-function convertCondResToIconType(cond) {
+// Function was needed when using Open Weather API.  Retained for reference
+// function convertCondResToIconType(cond) {
   // Function returns the icon code for the Weather Icons library detailed here:
   // https://erikflowers.github.io/weather-icons/
-  switch(true) {
-    case /clear sky/.test(cond):
-      return "wi-day-sunny";
-      break;
-    case /cloud/.test(cond):
-      return "wi-day-cloudy";
-      break;
-    case /drizzle/.test(cond):
-      return "wi-day-showers";
-      break;
-    case /rain/.test(cond):
-      return "wi-day-rain";
-      break;
-    case /thunderstorm/.test(cond):
-      return "wi-day-thunderstorm";
-      break;
-    case /snow/.test(cond):
-      return "wi-day-snow";
-      break;
-    case /(mist|haze|fog)/.test(cond):
-      return "wi-day-fog";
-      break;
-    case /hail/.test(cond):
-      return "wi-day-hail";
-      break;
-    case /tornado/.test(cond):
-      return "wi-tornado";
-      break;
-    default:
-      return "Condition not found";
-  }
-}
+//   switch(true) {
+//     case /clear sky/.test(cond):
+//       return "wi-day-sunny";
+//       break;
+//     case /cloud/.test(cond):
+//       return "wi-day-cloudy";
+//       break;
+//     case /drizzle/.test(cond):
+//       return "wi-day-showers";
+//       break;
+//     case /rain/.test(cond):
+//       return "wi-day-rain";
+//       break;
+//     case /thunderstorm/.test(cond):
+//       return "wi-day-thunderstorm";
+//       break;
+//     case /snow/.test(cond):
+//       return "wi-day-snow";
+//       break;
+//     case /(mist|haze|fog)/.test(cond):
+//       return "wi-day-fog";
+//       break;
+//     case /hail/.test(cond):
+//       return "wi-day-hail";
+//       break;
+//     case /tornado/.test(cond):
+//       return "wi-tornado";
+//       break;
+//     default:
+//       return "Condition not found";
+//   }
+// }
 
 function celsiusToFarenheit(temp) {
   return Math.floor(temp * 1.8 + 32);
@@ -239,7 +240,8 @@ $(document).ready(function() {
     navigator.geolocation.getCurrentPosition(geolocSuccess, geolocFail, gelocOptions);
   }
 
-  function displayConditionIcon(cond) {
-    return '<i class="weather-icon wi ' + convertCondResToIconType(cond) + '">'
-  }
+  // Function was needed when using Open Weather API.  Retained for reference
+  // function displayConditionIcon(cond) {
+  //   return '<i class="weather-icon wi ' + convertCondResToIconType(cond) + '">'
+  // }
 });
