@@ -3,7 +3,6 @@ currentWeather = {};
 
 function createWeatherAPIPromise(loc, key) {
   var queryURL = "https://api.wunderground.com/api/" + key + "/conditions/q/" + loc.lat + "," + loc.long + "/json";
-  console.log(queryURL);
   var jqueryWPromise = $.getJSON(queryURL);
   return Promise.resolve(jqueryWPromise);
 }
@@ -154,7 +153,8 @@ $(document).ready(function() {
       upcaseStringFirstLetters(weather.conditions) + 
       '</h5>' +
       '<h5 class="weather-info condition-icon text-center">' + 
-      displayConditionIcon(weather.conditions) + 
+      // displayConditionIcon(weather.conditions) + 
+      '<img class="weather-icon wi" src="' + currentWeather.weatherIconUrl + '">' +
       '</h5>');
     return Promise.resolve(jQueryPromise);
   }
