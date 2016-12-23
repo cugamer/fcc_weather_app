@@ -82,23 +82,27 @@ $(document).ready(function() {
     var jQueryPromise = $('.weather-display-area').html('<div class="weather-display text-center">' +
             '<p class="api-desc-text">Please enter your Open Weather Map api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="http://openweathermap.org/api" target="blank">Open Weather Map site</a>.</p>.' +
           '</div>' +
-          '<form class="key-form text-center">' +
-            '<input type="text" class="key-text">' +
-            '<br />' +
-            '<input type="submit" class="key-submit btn-primary" value="Add API Key">' +
-          '</form>' + 
+          '<div class="input-area">' +
+            '<form class="key-form text-center">' +
+              '<input type="text" class="key-text">' +
+              '<br />' +
+              '<input type="submit" class="key-submit btn-primary" value="Add API Key">' +
+            '</form>' + 
+          '</div>' +
           '<div class="last-updated"></div>');
     return Promise.resolve(jQueryPromise);
   }
 
   var apiKey = new function() {
     this.apiKey = null;
-    this.getAPIKey = function() {
-      return this.apiKey;
-    }
-    this.setAPIKey = function(key) {
-      this.apiKey = key;
-    }
+  }
+
+  apiKey.setAPIKey = function(key) {
+    this.apiKey = key;
+  }
+
+  apiKey.getAPIKey = function() {
+    return this.apiKey;
   }
 
   function addActionToAPIKeyForm() {
@@ -122,9 +126,9 @@ $(document).ready(function() {
 
   function updateWeather(loc, key) {
     createWeatherAPIPromise(loc, key).then(function(res) {
-      if(!apiKey.apiKey) {
-        apiKey.apiKey = key;
-      }
+    if(!apiKey.apiKey) {
+      apiKey.setAPIKey(key);
+    }
       currentWeather = {
         tempC: Math.floor(res.main.temp - 273),
         conditions: res.weather[0].description
@@ -178,12 +182,12 @@ $(document).ready(function() {
   function addActionToRefreshButton() {
     $('.refresh-weather').on('click', function() {
       var d = new Date();
-      updateWeather(geoLoc, apiKey.apiKey);
-    })
+      updateWeather(geoLoc, apiKey.getAPIKey());
+    });
   }
 
   function addRefreshWeatherButton() {
-    var jQueryPromise = $(".key-form").html('<button class="btn-primary refresh-weather"> Refresh Weather</button>');
+    var jQueryPromise = $(".input-area").html('<button class="btn-primary refresh-weather">Refresh Weather</button>');
     Promise.resolve(jQueryPromise).then(function() {
       addActionToRefreshButton();
     });
