@@ -81,7 +81,7 @@ $(document).ready(function() {
 
   function createWeatherFormPromise() {
     var jQueryPromise = $('.weather-display-area').html('<div class="weather-display text-center">' +
-            '<p class="api-desc-text">Please enter your Open Weather Map api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="http://openweathermap.org/api" target="blank">Open Weather Map site</a>.</p>.' +
+            '<p class="api-desc-text">Please enter your Weather Underground api key to prompt display of your current weather.  Your api key can be generated for free on the <a href="https://www.wunderground.com/weather/api" target="blank">Weather Underground site</a>.</p>.' +
           '</div>' +
           '<div class="input-area">' +
             '<form class="key-form text-center">' +
