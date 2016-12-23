@@ -2,7 +2,8 @@ geoLoc = {};
 currentWeather = {};
 
 function createWeatherAPIPromise(loc, key) {
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?APPID=" + key + "&lat=" + loc.lat + "&lon=" + loc.long;
+  var queryURL = "https://api.wunderground.com/api/" + key + "/conditions/q/" + loc.lat + "," + loc.long + "/json";
+  console.log(queryURL);
   var jqueryWPromise = $.getJSON(queryURL);
   return Promise.resolve(jqueryWPromise);
 }
@@ -130,8 +131,9 @@ $(document).ready(function() {
       apiKey.setAPIKey(key);
     }
       currentWeather = {
-        tempC: Math.floor(res.main.temp - 273),
-        conditions: res.weather[0].description
+        tempC: Math.floor(res.current_observation.temp_c),
+        conditions: res.current_observation.icon,
+        weatherIconUrl: res.current_observation.icon_url
       }
       updateWeatherDisplay(currentWeather);
       addRefreshWeatherButton();
